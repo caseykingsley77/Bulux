@@ -1,29 +1,26 @@
-To redirect static files to a subfolder in your project called `Bulux\bstore\static`, you can update the vercel.json like this:
-
-```json
 {
-  "builds": [
-    {
-      "src": "bstore/wsgi.py", 
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.9"
+    "builds": [
+      {
+        "src": "bstore/wsgi.py", 
+        "use": "@vercel/python",
+        "config": {
+          "maxLambdaSize": "15mb",
+          "runtime": "python3.9"
+        }
       }
+    ],
+    "routes": [
+      {
+        "src": "/static/(.*)",
+        "dest": "/home/app/web/Bulux/bstore/static/$1" 
+      },
+      {
+        "src": "/(.*)",
+        "dest": "bstore/wsgi.py"
+      }
+    ],
+  
+    "env": {
+      "STATIC_ROOT": "/home/app/web/Bulux/bstore/static"  
     }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/home/app/web/Bulux/bstore/static/$1" 
-    },
-    {
-      "src": "/(.*)",
-      "dest": "bstore/wsgi.py"
-    }
-  ],
-
-  "env": {
-    "STATIC_ROOT": "/home/app/web/Bulux/bstore/static"  
   }
-}
