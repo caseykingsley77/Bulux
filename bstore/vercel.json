@@ -1,28 +1,22 @@
 {
-    "builds": [ 
-      {
+    "builds": [{
         "src": "bstore/wsgi.py",
-        "use": "@vercel/python",  
-        "config": {
-          "maxLambdaSize": "15mb",
-          "runtime": "python3.9"
-        }
-      }
-    ],
-  
+        "use": "@vercel/python",
+        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+    },
+    {
+        "src": "build_files.sh",
+        "use": "@vercel/static",
+        "config": { "distDir": "staticfiles_build" }
+    }],
     "routes": [
-      {
-        "src": "/static/(.*)",
-        "dest": "/home/app/web/Bulux/bstore/static/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "bstore/wsgi.py"
-      }
-    ],
-  
-    "env": {
-      "DJANGO_SETTINGS_MODULE": "bstore.settings",
-      "STATIC_ROOT": "/home/app/web/Bulux/bstore/static"
-    } 
-  }
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "bstore/wsgi.py"
+        }
+    ]
+}
